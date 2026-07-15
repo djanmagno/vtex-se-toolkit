@@ -29,19 +29,36 @@ chat; the SE shares it. This keeps the skill safe for the whole team.
 
 ## Inputs to gather
 
-- **Which opportunity.** A name or ID. If the SE says "all my opportunities",
-  resolve their `userId` with `get_my_profile`, `get_projects` filtered by
-  `teamMemberId` = that id and `status` = In progress (value 2), and produce a
-  short report per opportunity plus a one-line portfolio roll-up at the top.
+- **Which opportunity.** A name or ID, or "all my opportunities" for a
+  portfolio roll-up (see step 1a below for how that path is resolved).
 - **Window.** Default: since last week's report (last 7 days). Accept overrides.
 
 ## Workflow
 
-1. **Read the opportunity.** `get_projects` with `includeAllFields: true`.
-   Capture: client/company, `Opportunity Stage` (Qualification → Scope & Validate
-   → Active Pursuit → Proposal → Negotiate → Commit & Signing → Won/Lost),
-   `Sales Region` / `Macro Region`, `ACV`, `Estimated GMV`, the current phase,
-   `progressPercentage`, and key dates (`startDate`, `dueDate`/Closed date).
+1. **Single opportunity: read it directly.** `get_projects` with
+   `includeAllFields: true`. Capture: client/company, `Opportunity Stage`
+   (Qualification → Scope & Validate → Active Pursuit → Proposal → Negotiate →
+   Commit & Signing → Won/Lost), `Sales Region` / `Macro Region`, `ACV`,
+   `Estimated GMV`, the current phase, `progressPercentage`, and key dates
+   (`startDate`, `dueDate`/Closed date). A single-project lookup is small — no
+   pagination concern here.
+
+1a. **"All my opportunities": call `get_se_digest(email)` instead of paginating
+    `get_projects`.** The MCP tool (Rocketlane-MCP `feat/presentation-artifacts`
+    branch onward) aggregates server-side and returns a small, deterministic
+    result: `my_opps` (count), `hygiene_nudges` (missing stage/close date/ACV,
+    with the actual opp names), `my_pipeline` (open ACV by stage),
+    `at_risk_overdue`, `my_opps_detail` (per-opp severity 🔴/🟡/🟢 + flags), and
+    **`movement`** (`{status, highlights, lowlights, since}` — Won/Lost/stage
+    moves since the last weekly snapshot; `status: "insufficient_history"`
+    until a baseline ~7 days old exists — say so plainly rather than
+    improvising a "what changed" narrative). This replaces manually paginating
+    and tallying `get_projects` across the whole book — the same 1MB/hand-count
+    trap the exec/region digests were built to avoid. Use `my_opps_detail` to
+    drive the per-opportunity blocks below instead of a second raw fetch per
+    opp; only fall back to `get_project`/`get_tasks` for a specific opportunity
+    if you need playbook task-level detail (Discovery Doc, RFP, Demo status)
+    that the digest doesn't carry.
 
 2. **Read the playbook tasks.** `get_tasks` filtered by `projectId`. The SE
    template has a known task set — e.g. *Discovery Meeting, Discovery Document,
@@ -118,8 +135,14 @@ Sources: <tasks, Slack channel if used>
 ```
 
 For "all my opportunities", lead with a one-line roll-up
-(e.g. "8 active · 1 ready for handover · 2 stalled · 1 past close"), then the
-per-opportunity blocks ordered by what needs attention first.
+(e.g. "8 active · 1 ready for handover · 2 stalled · 1 past close"), then a
+**"Since last week"** block built straight from `get_se_digest`'s `movement`
+field — Won/Lost/stage-advance events, verbatim from the tool, never
+paraphrased or inferred from memory — followed by the per-opportunity blocks
+ordered by what needs attention first (use `my_opps_detail`'s severity to
+order, never as a performance ranking). If `movement.status` is
+`"insufficient_history"`, say plainly "no baseline yet to compare against"
+rather than guessing at what changed.
 
 End by noting it's a draft to review before sharing, and offer to adjust.
 
