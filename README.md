@@ -6,6 +6,8 @@ Discovery → RFP → Demo → POC → Solution Design → Closing → Handover 
 
 Most skills are **read-only**. Two skills write to Rocketlane — `log-note` and
 `status-board` — and both write **only after explicit confirmation**.
+`meeting-to-rocketlane` and `miro-to-rocketlane` also write, following the same
+confirm-first pattern.
 
 ## Skills
 
@@ -18,15 +20,17 @@ Most skills are **read-only**. Two skills write to Rocketlane — `log-note` and
 | `log-note` | "log this note on the Accor project", "anota no RL que…" | Takes a note in any language, translates it to English, and records it as an internal note on the most relevant playbook task — **after showing the text + destination and getting your OK**. |
 | `status-board` | "let me check off the statuses of my opps" | Shows your active opportunities in chat with a lightweight per-opportunity status picker; writes status changes back to Rocketlane via `update_project` **after you confirm the exact old → new changes**. |
 | `meeting-to-rocketlane` | "log my last meeting with Accor to Rocketlane" | Pulls a meeting from **Granola or Read AI** (whichever is connected), summarizes it in English, and logs the key points + action items as an internal note on the right playbook task — **after you confirm**. |
+| `miro-to-rocketlane` | "log the architecture board for Accor to Rocketlane", "pull the Miro whiteboard from the workshop" | Pulls a **Miro** board (architecture diagram, workshop, whiteboarding session), summarizes it in English — cross-referencing the client's Atlas architecture doc and best practices when the board is architecture-related — and logs it as an internal note on the right playbook task — **after you confirm**. |
 
 ## Connectors used
 
 Rocketlane (projects, phases, tasks), **Slack**, VTEX Account Inspector, Atlas
-(architecture knowledge base), and a meeting notetaker — **Granola or Read AI**
-(the `meeting-to-rocketlane` skill auto-detects whichever is connected). The two
-meeting connectors are declared in `.mcp.json` so installing the plugin offers
-them. Each skill resolves the current user via Rocketlane's profile, so it works
-for any SE without per-person setup.
+(architecture knowledge base), **Miro** (boards, diagrams, whiteboards), and a
+meeting notetaker — **Granola or Read AI** (the `meeting-to-rocketlane` skill
+auto-detects whichever is connected). Miro and the two meeting connectors are
+declared in `.mcp.json` so installing the plugin offers them. Each skill
+resolves the current user via Rocketlane's profile, so it works for any SE
+without per-person setup.
 
 **Slack ↔ Rocketlane reconciliation.** `status-report` and `portfolio-risk`
 actively compare the client's Slack channel against the Rocketlane record and
@@ -36,6 +40,12 @@ updated. Client channel naming varies (e.g. `#emea-pt-benfica`,
 `#campaign-biopak-b2b-australia`), so the skills search by client name and fall
 back to message search. **Connect the Slack connector** for these skills to work
 fully; without it they fall back to Rocketlane-only.
+
+**Architecture access.** `discovery-brief` and `miro-to-rocketlane` both pull
+from **Atlas** — `retrieve_context` for best-practice patterns and
+`get_architecture` for a client's existing solution architecture document, when
+one exists — so recommendations and board summaries stay grounded rather than
+invented.
 
 ## Calibration note
 

@@ -1,9 +1,5 @@
 {
   "mcpServers": {
-    "rocketlane": {
-      "type": "http",
-      "url": "https://rocket-mcp.rl-platforms.rocketlane.com/mcp"
-    },
     "granola": {
       "type": "http",
       "url": "https://mcp.granola.ai/mcp"
@@ -11,6 +7,10 @@
     "read-ai": {
       "type": "http",
       "url": "https://api.read.ai/mcp"
+    },
+    "miro": {
+      "type": "http",
+      "url": "https://mcp.miro.com/"
     }
   }
 }
