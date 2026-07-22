@@ -1,8 +1,8 @@
 {
   "name": "vtex-se-toolkit",
   "displayName": "SE Toolkit",
-  "version": "0.1.1",
-  "description": "Skills for the VTEX Solution Engineering team on Rocketlane pre-sales opportunities: weekly status digests, pipeline triage, discovery/solution-design briefs, POC readiness, logging English meeting notes (Granola/Read AI), and a status board to update project statuses. Cross-references Rocketlane with Slack, the VTEX account, and Atlas. Read-only by default; writes to Rocketlane only after explicit confirmation.",
+  "version": "0.2.0",
+  "description": "Skills for the VTEX Solution Engineering team on Rocketlane pre-sales opportunities: weekly status digests, pipeline triage, discovery/solution-design briefs, POC readiness, logging English meeting notes (Granola/Read AI), logging Miro architecture/workshop boards (with Atlas architecture cross-referencing), and a status board to update project statuses. Cross-references Rocketlane with Slack, the VTEX account, Miro, and Atlas. Read-only by default; writes to Rocketlane only after explicit confirmation.",
   "author": {
     "name": "VTEX Solution Engineering"
   },
@@ -11,6 +11,8 @@
     "rocketlane",
     "solution-engineering",
     "pre-sales",
-    "status-report"
+    "status-report",
+    "miro",
+    "architecture"
   ]
 }

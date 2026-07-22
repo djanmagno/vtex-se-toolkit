@@ -3,12 +3,12 @@
   "owner": {
     "name": "VTEX Solution Engineering"
   },
-  "description": "VTEX Solution Engineering toolkit: Rocketlane pre-sales skills plus Granola/Read AI meeting capture.",
+  "description": "VTEX Solution Engineering toolkit: Rocketlane pre-sales skills plus Granola/Read AI meeting capture and Miro architecture/whiteboard capture.",
   "plugins": [
     {
       "name": "vtex-se-toolkit",
       "source": "./",
-      "description": "Skills for the VTEX Solution Engineering team on Rocketlane pre-sales opportunities: weekly status reports, pipeline triage, discovery briefs, POC readiness, English notes, status board, and Granola/Read AI meeting capture."
+      "description": "Skills for the VTEX Solution Engineering team on Rocketlane pre-sales opportunities: weekly status reports, pipeline triage, discovery briefs, POC readiness, English notes, status board, Granola/Read AI meeting capture, and Miro architecture/workshop board capture."
     }
   ]
 }
