@@ -47,6 +47,16 @@ from **Atlas** — `retrieve_context` for best-practice patterns and
 one exists — so recommendations and board summaries stay grounded rather than
 invented.
 
+## Browser adapters (OpenCLI)
+
+`opencli-plugins/vtex-admin/` is a separate, additive piece: read commands for VTEX
+Admin/API surfaces with no MCP connector, packaged as an [OpenCLI](https://github.com/jackwener/opencli)
+monorepo sub-plugin (`opencli-plugin.json` at the repo root) — a different plugin
+system from the `.claude-plugin/` skills above, living in the same repo. See
+[`opencli-plugins/vtex-admin/README.md`](./opencli-plugins/vtex-admin/README.md) for
+what's built, why the first command is a public no-auth catalog search rather than a
+UI-driven one, and how to add the next command.
+
 ## Calibration note
 
 These skills are tuned for the **SE / pre-sales** reality: non-billable projects

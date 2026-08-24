@@ -1,0 +1,12 @@
+{
+  "version": "0.1.0",
+  "opencli": ">=1.8.0",
+  "description": "OpenCLI adapters for VTEX Admin (SE Toolkit). Read-only browser adapters for VTEX Admin screens with no usable public API — session-based, works against any VTEX account the operator is logged into. This manifest is a separate ecosystem from .claude-plugin/ (Claude Code skills) — same repo, two independent plugin systems.",
+  "plugins": {
+    "vtex-admin": {
+      "path": "opencli-plugins/vtex-admin",
+      "description": "Read commands for VTEX Admin screens without a usable public API (starting with B2B authorization dimensions: organizations, cost centers, buying policies).",
+      "version": "0.1.0"
+    }
+  }
+}

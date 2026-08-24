@@ -1,0 +1,9 @@
+{
+  "name": "opencli-plugin-vtex-admin",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "OpenCLI adapters for VTEX Admin screens with no usable public API.",
+  "peerDependencies": {
+    "@jackwener/opencli": ">=1.8.0"
+  }
+}

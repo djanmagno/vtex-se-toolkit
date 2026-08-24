@@ -8,3 +8,9 @@ Thumbs.db
 # Logs / temp
 *.log
 tmp/
+
+# OpenCLI plugin build artifacts (opencli-plugins/) — transpiled by
+# `opencli plugin update` on install, not committed source.
+opencli-plugins/*/node_modules/
+opencli-plugins/*/package-lock.json
+opencli-plugins/*/*.js
